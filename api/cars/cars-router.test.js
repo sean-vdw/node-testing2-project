@@ -20,4 +20,17 @@ describe('[GET] /cars', () => {
     const res = await request(server).get('/api/cars');
     expect(res.status).toBe(200);
   });
+
+  it('should return 4 cars', async () => {
+    const res = await request(server).get('/api/cars');
+    expect(res.body).toHaveLength(4);
+  });
+});
+
+describe('[GET] /cars/:id', () => {
+  it('should return the requested car by id', async () => {
+    const res = await request(server).get('/api/cars/1');
+    console.log(res);
+    expect(res.body).toStrictEqual({ id: 1, make: 'ferrari', model: 'f430' });
+  });
 });
