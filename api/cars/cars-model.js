@@ -4,7 +4,7 @@ function getAll() {
   return db('cars');
 };
 
-function getById() {
+function getById(id) {
   return db('cars').where('id', id).first();
 };
 

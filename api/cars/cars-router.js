@@ -21,20 +21,21 @@ router.get('/:id', checkId, (req, res, next) => {
 
 router.post('/', checkPayload, async (req, res, next) => {
   try {
-    const newCar = await Cars.add({ make: req.make.trim(), model: req.model.trim() });
+    const newCar = await Cars.add({ make: req.body.make.trim(), model: req.body.model.trim() });
     res.status(201).json(newCar);
   } catch(err) {
     next(err);
   };
 });
 
-router.delete('/:id', checkId, (req, res, next) => {
+router.delete('/:id', checkId, async (req, res, next) => {
   const { id } = req.params;
-  Cars.remove(id)
-    .then(delCar => {
-      res.json(delCar)
-    })
-    .catch(next);
+  try {
+    const deletedCar = await Cars.remove(id);
+    res.json(deletedCar);
+  } catch(err) {
+    next(err);
+  };
 });
 
 module.exports = router;
