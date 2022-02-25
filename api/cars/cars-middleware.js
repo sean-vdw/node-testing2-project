@@ -5,7 +5,7 @@ exports.checkId = async (req, res, next) => {
     const { id } = req.params;
     const car = await Cars.getById(id);
     if(!car) {
-      next({ status: 404, message: `car with id of ${id} not found` })
+      res.status(404).json({ message: `car with id of ${id} not found` });
     } else {
       next();
     }
@@ -18,9 +18,9 @@ exports.checkPayload = async (req, res, next) => {
   const { make, model } = req.body;
   try {
     if(make === null || make === undefined || make.trim() === '') {
-      next({ status: 400, message: 'car make is required' })
+      res.status(400).json({ message: 'car make is required' })
     } else if (model === null || model === undefined || model.trim() === '') {
-      next({ status: 400, message: 'car model is required' })
+      res.status(400).json({ message: 'car model is required' })
     } else {
       next();
     }
